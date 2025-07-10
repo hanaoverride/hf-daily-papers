@@ -1,0 +1,11 @@
+# .env 파일을 Docker 이미지에 포함시키지 않기 위함
+.env
+
+# Python 캐시 파일
+__pycache__/
+*.pyc
+*.pyo
+
+# IDE/에디터 설정 파일
+.idea/
+.vscode/
