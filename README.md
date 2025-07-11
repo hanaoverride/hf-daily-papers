@@ -98,9 +98,9 @@ CI/CD 파이프라인이 설정되어 있어, `main` 브랜치에 코드가 푸�
     > **Note**: Windows Command Prompt(CMD)에서는 위 명령어가 제대로 작동하지 않을 수 있습니다. Git Bash를 사용하시거나, 직접 `.env` 파일을 만드신 후 내용을 복사-붙여넣기 해주세요.
 
 2.  **Docker 컨테이너 실행**
-    아래 명령어를 실행하여 GHCR에 있는 최신 이미지를 내려받아 컨테이너를 실행합니다. **`your-github-username` 부분을 실제 GitHub 사용자 이름으로 변경하세요.**
+    아래 명령어를 실행하여 GHCR에 있는 최신 이미지를 내려받아 컨테이너를 실행합니다.
     ```bash
-    docker run -d --name hf-papers-notifier --restart unless-stopped --env-file .env ghcr.io/your-github-username/hf-daily-papers:latest
+    docker run -d --name hf-papers-notifier --restart unless-stopped --env-file .env ghcr.io/hanaoverride/hf-daily-papers:latest
     ```
     - `-d`: 컨테이너를 백그라운드에서 실행합니다.
     - `--name`: 컨테이너에 이름을 부여합니다.
