@@ -1,6 +1,6 @@
 # Hugging Face Daily Papers
 
-매일 Hugging Face에 올라오는 새로운 논문 정보를 수집하여 제공하는 자동화 프로젝트입니다.
+매일 Hugging Face에 올라오는 새로운 논문 정보를 수집하여 제공하는 자동화 프로젝트입니다. 엄청 간단합니다.
 
 ## ✨ 주요 기능
 
