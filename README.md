@@ -21,7 +21,7 @@ Hugging Face에 매일 새로 올라오는 논문 정보를 스크래핑하여 �
 ├── main.py           # 메인 실행 파일 (스크래핑 및 Discord 전송)
 ├── README.md         # 프로젝트 설명 파일
 ├── requirements.txt  # Python 의존성 목록
-└── scraper.py        # Hugging Face 스크���핑 로직
+└── scraper.py        # Hugging Face 스크래핑 로직
 ```
 
 ## 🚀 배포 방법
@@ -58,11 +58,12 @@ Hugging Face에 매일 새로 올라오는 논문 정보를 스크래핑하여 �
     ```
 
 4.  **환경 변수 설정**
-    `.env` 파일을 생성하고 Discord 웹훅 URL을 추가합니다.
+    아래 명령어를 실행하여 Discord 웹훅 URL이 포함된 `.env` 파일을 생성합니다.
+    `your_webhook_url` 부분을 실제 웹훅 URL로 변경하세요.
+    ```bash
+    echo 'DISCORD_WEBHOOK_URL="https://discord.com/api/webhooks/your/webhook_url"' > .env
     ```
-    # .env
-    DISCORD_WEBHOOK_URL="https://discord.com/api/webhooks/your/webhook_url"
-    ```
+    > **Note**: Windows Command Prompt(CMD)에서는 위 명령어가 제대로 작동하지 않을 수 있습니다. Git Bash를 사용하시거나, 직접 `.env` 파일을 만드신 후 내용을 복사-붙여넣기 해주세요.
 
 5.  **스크립트 실행**
     수동으로 스크립트를 실행하여 정상적으로 동작하는지 확인합니다.
@@ -89,19 +90,21 @@ CI/CD 파이프라인이 설정되어 있어, `main` 브랜치에 코드가 푸�
 #### 단계
 
 1.  **환경 변수 파일 생성**
-    Discord 웹훅 URL을 담을 `.env` 파일을 로컬에 생성합니다.
+    아래 명령어를 실행하여 Discord 웹훅 URL이 포함된 `.env` 파일을 생성합니다.
+    `your_webhook_url` 부분을 실제 웹훅 URL로 변경하세요.
+    ```bash
+    echo 'DISCORD_WEBHOOK_URL="https://discord.com/api/webhooks/your/webhook_url"' > .env
     ```
-    # .env
-    DISCORD_WEBHOOK_URL="https://discord.com/api/webhooks/your/webhook_url"
-    ```
+    > **Note**: Windows Command Prompt(CMD)에서는 위 명령어가 제대로 작동하지 않을 수 있습니다. Git Bash를 사용하시거나, 직접 `.env` 파일을 만드신 후 내용을 복사-붙여넣기 해주세요.
 
 2.  **Docker 컨테이너 실행**
     아래 명령어를 실행하여 GHCR에 있는 최신 이미지를 내려받아 컨테이너를 실행합니다. **`your-github-username` 부분을 실제 GitHub 사용자 이름으로 변경하세요.**
     ```bash
-    docker run -d --name hf-papers-notifier --env-file .env ghcr.io/your-github-username/hf-daily-papers:latest
+    docker run -d --name hf-papers-notifier --restart unless-stopped --env-file .env ghcr.io/your-github-username/hf-daily-papers:latest
     ```
     - `-d`: 컨테이너를 백그라운드에서 실행합니다.
     - `--name`: 컨테이너에 이름을 부여합니다.
+    - `--restart unless-stopped`: 사용자가 직접 중지하지 않는 한, 시스템 재부팅 시 자동으로 컨테이너를 다시 시작합니다.
     - `--env-file`: 로컬의 `.env` 파일을 컨테이너의 환경 변수로 전달합니다.
 
     컨테이너는 `entrypoint.sh` 스크립트에 의해 시작 시 한 번, 그리고 `crontab` 설정에 따라 매일 새벽 1시에 주기적으로 `main.py`를 실행합니다.
@@ -132,6 +135,6 @@ docker logs hf-papers-notifier
 
 3.  **Docker 컨테이너 실행**
     ```bash
-    docker run -d --name hf-papers-notifier --env-file .env hf-daily-papers
+    docker run -d --name hf-papers-notifier --restart unless-stopped --env-file .env hf-daily-papers
     ```
 
