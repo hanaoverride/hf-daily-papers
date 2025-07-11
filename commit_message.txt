@@ -1,0 +1,1 @@
+feat: Initial project setup and CI/CD pipeline
