@@ -4,7 +4,7 @@
 FROM python:3.10-slim
 
 # 1-1. GitHub 저장소 연결용 LABEL 추가
-LABEL org.opencontainers.image.source="https://github.com/hanaoverride/huggingface-daily-papers"
+LABEL org.opencontainers.image.source=https://github.com/hanaoverride/huggingface-daily-papers
 
 # 2. 작업 디렉토리 설정
 WORKDIR /app
