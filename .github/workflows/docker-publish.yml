@@ -1,0 +1,32 @@
+# .github/workflows/docker-publish.yml
+
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ] # main 브랜치에 push될 때 실행
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write # GHCR에 이미지를 push하기 위한 권한
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Log in to the Container registry
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GH_PAT }} # GitHub 저장소 Secret에 등록해야 할 PAT
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/hf-daily-papers:latest
