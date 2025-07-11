@@ -34,7 +34,7 @@
     ```env
     # .env
     # 예: 알림을 위한 Webhook URL 등
-    # SLACK_WEBHOOK_URL=https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX
+    # DISCORD_WEBHOOK_URL=https://~
     ```
 
 3.  **Docker 컨테이너 실행**
