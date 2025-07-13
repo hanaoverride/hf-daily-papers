@@ -1,4 +1,6 @@
 import os
+import time
+import schedule
 import requests
 from dotenv import load_dotenv
 from scraper import scrape_papers
@@ -54,8 +56,21 @@ def send_to_discord_webhook(papers):
     except requests.exceptions.RequestException as e:
         print(f"Error sending to Discord webhook: {e}")
 
-
-if __name__ == '__main__':
+def job():
+    """스케줄링될 작업을 정의합니다."""
     print("Scraping daily papers for webhook...")
     latest_papers = scrape_papers()
     send_to_discord_webhook(latest_papers)
+
+if __name__ == '__main__':
+    # 스크립트 시작 시 한 번 즉시 실행
+    job()
+    
+    # 매일 01:00에 작업 예약
+    schedule.every().day.at("01:00").do(job)
+    
+    print("Scheduler started... Waiting for the scheduled time.")
+    
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
